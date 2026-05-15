@@ -57,6 +57,17 @@ this.http.post<any>('http://localhost:8080/api/chat', {
 
     this.loading = false;
   }
+
+  
 });
+
 } 
+confirmAction() {
+
+  if (this.loading) return;
+
+  this.userMessage = 'CONFIRMAR';
+
+  this.sendMessage();
+}
 }
