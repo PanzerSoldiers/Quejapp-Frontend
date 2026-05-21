@@ -103,8 +103,9 @@
       </svg>
     </div>
     <h3 class="mt-4 text-lg font-semibold text-gray-800">PQRS Recibidas</h3>
-    <p class="mt-1 text-2xl font-bold text-orange-600">152</p>
-  </div>
+    <p class="mt-1 text-2xl font-bold text-orange-600">
+      {{ statistics()?.totalPqrs || 0 }}
+    </p>  </div>
 
   <!-- Card 2: Resueltas -->
   <div
@@ -117,8 +118,9 @@
       </svg>
     </div>
     <h3 class="mt-4 text-lg font-semibold text-gray-800">Resueltas</h3>
-    <p class="mt-1 text-2xl font-bold text-green-600">120</p>
-  </div>
+    <p class="mt-1 text-2xl font-bold text-green-600">
+      {{ statistics()?.closedPqrs || 0 }}
+    </p>  </div>
 
   <!-- Card 3: Días Promedio -->
   <div
@@ -132,8 +134,9 @@
       </svg>
     </div>
     <h3 class="mt-4 text-lg font-semibold text-gray-800">Días Promedio</h3>
-    <p class="mt-1 text-2xl font-bold text-blue-600">5 días</p>
-  </div>
+    <p class="mt-1 text-2xl font-bold text-blue-600">
+      {{ statistics()?.averageDaysToResolve || 0 }} días
+</p>  </div>
 
   <!-- Card 4: Satisfacción -->
   <div
@@ -147,7 +150,9 @@
       </svg>
     </div>
     <h3 class="mt-4 text-lg font-semibold text-gray-800">Satisfacción</h3>
-    <p class="mt-1 text-2xl font-bold text-yellow-600">92%</p>
+    <p class="mt-1 text-2xl font-bold text-yellow-600">
+      {{ statistics()?.satisfactionRate || 0 }}%
+    </p>
   </div>
 </div>
  </div>

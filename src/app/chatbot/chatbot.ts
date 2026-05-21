@@ -33,10 +33,17 @@ export class Chatbot {
     this.userMessage = '';
     this.loading = true;
 
-this.http.post<any>('http://localhost:8080/api/chat', {
-  message: messageToSend
+this.http.post<any>(
+  'http://localhost:8080/api/chat',
+  {
+    message: messageToSend
+  },
+  {
+    withCredentials: true
+  }
+)
  
-}).subscribe({
+.subscribe({
   next: (res) => {
     console.log('Respuesta backend:', res); //ver qué devuelve
 

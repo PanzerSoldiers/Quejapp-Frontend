@@ -13,17 +13,20 @@ import { NavigationBar } from '../../../components/navigation-bar/navigation-bar
 })
 export class AdminDashboard implements OnInit{
   statistics = signal<PQRSStatistics | null>(null);
+  priorityComplaints = signal<any[]>([]);
   loading = signal<boolean>(true);
   error = signal<string | null>(null);
   
   startDate = signal<string>('');
   endDate = signal<string>('');
   
-  selectedView = signal<'overview' | 'employees' | 'trends'>('overview');
+  selectedView = signal<'overview' | 'employees' | 'trends'|'analytics'>('overview');
   private pqrsService = inject(StatsService);
 
   ngOnInit(): void {
     this.loadStatistics();
+      this.loadPriorityComplaints();
+
   }
 
   loadStatistics(): void {
@@ -70,7 +73,7 @@ export class AdminDashboard implements OnInit{
     return obj?.[key] || 0;
   }
 
-  changeView(view: 'overview' | 'employees' | 'trends'): void {
+  changeView(view: 'overview' | 'employees' | 'trends'|'analytics'): void {
     this.selectedView.set(view);
   }
 
@@ -120,4 +123,14 @@ export class AdminDashboard implements OnInit{
   calculateEfficiency(received: number, resolved: number): number {
     return Math.round((resolved / received) * 100);
   }
+  loadPriorityComplaints(): void {
+  this.pqrsService.getPriorityComplaints().subscribe({
+    next: (data) => {
+      this.priorityComplaints.set(data);
+    },
+    error: (err) => {
+      console.error('Error cargando prioridades', err);
+    }
+  });
+}
 }

@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavigationBar } from "../navigation-bar/navigation-bar";
 import { RouterLink } from "@angular/router";
+import { StatsService } from '../../admin-features/services/stats-service';
+import { PQRSStatistics } from '../../models/pqrsstatistics';
 
 @Component({
   selector: 'app-home',
@@ -10,10 +12,28 @@ import { RouterLink } from "@angular/router";
   templateUrl: './home.html',
   styleUrls: ['./home.css']
 })
-export class Home{
+export class Home implements OnInit {
 
+  statistics = signal<PQRSStatistics | null>(null);
 
-   features = [
+  private statsService = inject(StatsService);
+
+  ngOnInit(): void {
+    this.loadStatistics();
+  }
+
+  loadStatistics(): void {
+    this.statsService.getStatistics({}).subscribe({
+      next: (data) => {
+        this.statistics.set(data);
+      },
+      error: (err) => {
+        console.error('Error cargando estadísticas', err);
+      }
+    });
+  }
+
+  features = [
     {
       icon: 'zap',
       title: 'Gestión Rápida',
@@ -53,7 +73,4 @@ export class Home{
       title: 'Respuesta Rápida'
     }
   ];
-
-  
 }
-
